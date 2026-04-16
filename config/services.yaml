@@ -1,0 +1,36 @@
+parameters:
+
+services:
+    _defaults:
+        autowire: true
+        autoconfigure: true
+
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Domain/*/Entity/'
+            - '../src/Kernel.php'
+
+    App\Domain\City\Repository\CityRepositoryInterface:
+        class: App\Infrastructure\Persistence\DoctrineCityRepository
+
+    App\Application\City\Port\CityServiceInterface:
+        class: App\Application\City\Service\CityService
+
+    App\Application\Weather\Port\WeatherForecastServiceInterface:
+        class: App\Application\Weather\Service\WeatherForecastService
+
+    App\Application\Weather\Port\WeatherClientInterface:
+        class: App\Infrastructure\Client\OpenMeteoClient
+        arguments:
+            $baseUrl: '%env(OPEN_METEO_BASE_URL)%'
+
+    App\Application\Weather\Port\WeatherForecastCacheInterface:
+        class: App\Infrastructure\Cache\WeatherForecastCache
+
+    App\Http\Listener\ApiKeyListener:
+        arguments:
+            $apiKey: '%env(API_KEY)%'
+
+    GuzzleHttp\Client: ~

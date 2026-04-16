@@ -1,0 +1,14 @@
+api:
+    resource:
+        path: ../src/Http/Controller/
+        namespace: App\Http\Controller
+        exclude: '../src/Http/Controller/V1/'
+    type: attribute
+    prefix: /api
+
+api_v1:
+    resource:
+        path: ../src/Http/Controller/V1/
+        namespace: App\Http\Controller\V1
+    type: attribute
+    prefix: /api/v1
